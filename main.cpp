@@ -82,7 +82,7 @@ int main() {
             break;
         case 6:
             std::cout << std::endl << "Merge Sort O(n * log(n))" << std::endl;
-            MergeSort(arr, userInput);
+            MergeSort(arr, 0,userInput-1);
             WriteToConsole(arr,userInput);
             break;
         case 7:

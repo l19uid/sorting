@@ -3,12 +3,12 @@
 #include <chrono>
 #include <vector>
 
-void SelectionSort(int* arr, int numElements) {
+void SelectionSort(int *arr, int numElements) {
     auto start = std::chrono::high_resolution_clock::now();
-    for(int i = 0; i < numElements - 1; i++) { // Projde array až na poslední prvek.
+    for (int i = 0; i < numElements - 1; i++) { // Projde array až na poslední prvek.
         int minIndex = i; // Nastaví index nejmenšího prvku.
-        for(int j = i + 1; j < numElements; j++) { // Projde array od i + 1 až na konec.
-            if(arr[j] < arr[minIndex]) { // Pokud je prvek na pozici j menší než minIndex take je to nový minIndex.
+        for (int j = i + 1; j < numElements; j++) { // Projde array od i + 1 až na konec.
+            if (arr[j] < arr[minIndex]) { // Pokud je prvek na pozici j menší než minIndex take je to nový minIndex.
                 minIndex = j;
             }
         }
@@ -19,17 +19,18 @@ void SelectionSort(int* arr, int numElements) {
     std::cout << "Time taken: " << elapsed.count() << "s" << std::endl;
 }
 
-void BubbleSort(int* arr, int numElements) {
+void BubbleSort(int *arr, int numElements) {
     auto start = std::chrono::high_resolution_clock::now();
     bool isSorted = true;
-    for(int i = 0; i < numElements - 1; i++) { // Projde array až na poslední prvek.
-        for(int j = 0; j < numElements - i - 1; j++) {
-            if(arr[j] > arr[j + 1]) { // Pokud je prvek na pozici j větší než prvek na pozici j + 1 tak je potřeba je prohodit.
+    for (int i = 0; i < numElements - 1; i++) { // Projde array až na poslední prvek.
+        for (int j = 0; j < numElements - i - 1; j++) {
+            if (arr[j] >
+                arr[j + 1]) { // Pokud je prvek na pozici j větší než prvek na pozici j + 1 tak je potřeba je prohodit.
                 std::swap(arr[j], arr[j + 1]);
                 isSorted = false;
             }
         }
-        if(isSorted) { // Pokud je array seřazený tak se cyklus ukončí.
+        if (isSorted) { // Pokud je array seřazený tak se cyklus ukončí.
             break;
         }
     }
@@ -38,13 +39,12 @@ void BubbleSort(int* arr, int numElements) {
     std::cout << "Time taken: " << elapsed.count() << "s" << std::endl;
 }
 
-void InsertionSort(int* arr, int numElements)
-{
+void InsertionSort(int *arr, int numElements) {
     auto start = std::chrono::high_resolution_clock::now();
-    for(int i = 1; i < numElements; i++) { // Projde array od druhého prvku až na konec.
+    for (int i = 1; i < numElements; i++) { // Projde array od druhého prvku až na konec.
         int j = i - 1; // Nastaví index na prvek před i.
         int key = arr[i]; // Nastaví klíč na prvek na pozici i.
-        while(j >= 0 && arr[j] > key) { // Pokud je prvek na pozici j větší než klíč tak se posune na pozici j + 1.
+        while (j >= 0 && arr[j] > key) { // Pokud je prvek na pozici j větší než klíč tak se posune na pozici j + 1.
             arr[j + 1] = arr[j];
             j--;
         }
@@ -56,14 +56,14 @@ void InsertionSort(int* arr, int numElements)
 }
 
 // Bogo sort nebo také Monkey sort.
-void BogoSort(int* arr, int numElements) {
-    while(!std::is_sorted(arr, arr + numElements)) {
+void BogoSort(int *arr, int numElements) {
+    while (!std::is_sorted(arr, arr + numElements)) {
         std::random_shuffle(arr, arr + numElements); //Jestli array není seřazený tak ho náhodně promícháme.
     }
 }
 
 
-void Down(int* arr, int last) {
+void Down(int *arr, int last) {
     //Vytvoříme indexi.
     int child;
     int parent = 0;
@@ -81,14 +81,12 @@ void Down(int* arr, int last) {
             std::swap(arr[parent], arr[child]);
             //Dítě se stává rodičem.
             parent = child;
-        }
-        else
+        } else
             return;
     }
 }
 
-void Heapify(int *arr, int numElements)
-{
+void Heapify(int *arr, int numElements) {
     //Vytvoříme heap.
     for (int i = 1; i < numElements; i++) {
         //Vytvoříme indexi.
@@ -105,15 +103,14 @@ void Heapify(int *arr, int numElements)
                 //Dítě se stává rodičem.
                 child = parent;
             }
-            //Pokud není dítě větší než rodič tak se cyklus ukončí.
+                //Pokud není dítě větší než rodič tak se cyklus ukončí.
             else
                 break;
         }
     }
 }
 
-void HeapSort(int *arr, int numElements)
-{
+void HeapSort(int *arr, int numElements) {
     //Vytvoření heapu.
     Heapify(arr, numElements);
     //Nastavíme index na poslední prvek.
@@ -129,16 +126,16 @@ void HeapSort(int *arr, int numElements)
     }
 }
 
-void CountingSort(int* arr,int numElements) {
+void CountingSort(int *arr, int numElements) {
     //Zjistíme maximální a minimální hodnotu.
     int max = *std::max_element(arr, arr + numElements);
     int min = *std::min_element(arr, arr + numElements);
     //Vypočítáme rozsah.
     int range = max - min + 1;
     //Vytvoříme pole pro počítání.
-    int* count = new int[range]();
+    int *count = new int[range]();
     //Vytvoříme pole pro výstup.
-    int* output = new int[numElements]();
+    int *output = new int[numElements]();
     //Pro každý prvek zvýšíme počet.
     for (int i = 0; i < numElements; i++)
         count[arr[i] - min]++;
@@ -155,49 +152,74 @@ void CountingSort(int* arr,int numElements) {
         arr[i] = output[i];
 }
 
-void Merge(int* arr, int* left, int* right, int numElements) {
-    int x,y = 0;
-    while ((x < numElements) && (y < numElements)) {
-        if (left[x] < right[y]) {
-            arr[x + y] = left[x];
-            x++;
-        }
-        else {
-            arr[x + y] = right[y];
-            y++;
+
+void Merge(int *arr, int start, int middle, int end) {
+    int leftSize = middle - start + 1;
+    int rightSize = end - middle;
+
+    // Rozdělení pole na dvě části.
+    int left[leftSize];
+    int right[rightSize];
+
+    // Naplníme pole.
+    for (int i = 0; i < leftSize; i++)
+        left[i] = arr[start + i];
+    for (int i = 0; i < end - middle; i++)
+        right[i] = arr[middle + 1 + i];
+
+    // Vytváříme nové indexi.
+    int arrIndex = start;
+    int rightIndex = 0, leftIndex = 0;
+
+    // Dokud jsou v obou polích prvky.
+    while (leftIndex < leftSize && rightIndex < rightSize) {
+        // Co se sleje první?
+        if (left[leftIndex] >= right[rightIndex]) {
+            // Levé pole se sleje do nového pole a posune se o jeden index.
+            arr[arrIndex] = left[leftIndex];
+            leftIndex++;
+            arrIndex++;
+        } else {
+            // Pravé pole se sleje do nového pole a posune se o jeden index.
+            arr[arrIndex] = right[rightIndex];
+            rightIndex++;
+            arrIndex++;
         }
     }
-    if (x < numElements) {
-        while (x < numElements) {
-            arr[x + y] = left[x];
-            x++;
-        }
+
+    // Doslévání.
+    while (leftIndex < leftSize) {
+        // Levé pole se sleje do nového pole a posune se o jeden index.
+        arr[arrIndex] = left[leftIndex];
+        leftIndex++;
+        arrIndex++;
     }
-    else {
-        while (y < numElements) {
-            arr[x + y] = right[y];
-            y++;
-        }
+    while (rightIndex < rightSize) {
+        // Pravé pole se sleje do nového pole a posune se o jeden index.
+        arr[arrIndex] = right[rightIndex];
+        rightIndex++;
+        arrIndex++;
     }
 }
 
-void MergeSort(int* arr, int numElements) {
-    // Pokud ma pole méně než 2 prvky, tak je již setříděné.
-    if (numElements <= 1)
+void MergeSort(int *array, int start, int end) {
+    // Pokud je start větší než konec tak se rekurze ukončí.
+    if (start >= end)
         return;
-    int center = numElements / 2;
-    int left[center];
-    for (int i = 0; i < center; i++)
-        left[i] = arr[i];
-    int right[numElements - center];
-    for (int i = center; i < numElements; i++)
-        right[i - center] = arr[i];
-    MergeSort(left, center);
-    MergeSort(right,numElements - center);
-    Merge(arr, left, right, center);
+
+    // Vypočítáme střed.
+    int middle = (start + end) / 2;
+
+    // Děláme rekurzi na levou část.
+    MergeSort(array, start, middle);
+    // Děláme rekurzi na pravou část.
+    MergeSort(array, middle + 1, end);
+
+    // Sléváme pole.
+    Merge(array, start, middle, end);
 }
 
-int Divide(int* list, int left, int right, int pivot) {
+int Divide(int *list, int left, int right, int pivot) {
     //Prohodíme pivot s pravým indexem.
     std::swap(list[pivot], list[right]);
     //Nastavíme nový pivot.
@@ -218,7 +240,7 @@ int Divide(int* list, int left, int right, int pivot) {
     return i;
 }
 
-void Quicksort(int* arr, int left, int right) {
+void Quicksort(int *arr, int left, int right) {
     //Pokud je levý index menší než pravý tak se cyklus opakuje.
     if (right >= left) {
         //Nastavíme pivot na levý index.
